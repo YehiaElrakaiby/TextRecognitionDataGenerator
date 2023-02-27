@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+.idea
 *$py.class
 
 # C extensions
@@ -20,6 +21,7 @@ lib64/
 parts/
 sdist/
 var/
+out/
 wheels/
 *.egg-info/
 .installed.cfg
