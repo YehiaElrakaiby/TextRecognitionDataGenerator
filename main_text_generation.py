@@ -52,6 +52,7 @@ class MyTextGenerator:
                 random_blur=True,
                 random_skew=True,
                 skewing_angle=15,
+                text_color='#000000,#888888',
                 fit=True,
                 size=64,
                 # background_type=2
