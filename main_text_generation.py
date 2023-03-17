@@ -26,20 +26,36 @@ class MyTextGenerator:
                 words_list.append(word)
 
         # The generators use the same arguments as the CLI, only as parameters
-        generator = GeneratorFromStrings(
-            strings=words_list,
-            language=language,  # ['latin, '7led']
-            count=nb_of_words,
-            blur=2,
-            distorsion_type=3,
-            random_blur=True,
-            random_skew=True,
-            skewing_angle=15,
-            text_color='#000000,#888888',
-            fit=True,
-            size=64,
-            background_type=2
-        )
+        if from_dict:
+            generator = GeneratorFromDict(
+                length=3,
+                language=language,  # ['keras', '7led']
+                count=nb_of_words,
+                blur=2,
+                distorsion_type=3,
+                random_blur=True,
+                random_skew=True,
+                skewing_angle=15,
+                text_color='#000000,#888888',
+                fit=True,
+                size=64,
+                background_type=2
+            )
+        else:
+            generator = GeneratorFromStrings(
+                strings=words_list,
+                language=language,  # ['keras', '7led']
+                count=nb_of_words,
+                blur=2,
+                distorsion_type=3,
+                random_blur=True,
+                random_skew=True,
+                skewing_angle=15,
+                text_color='#000000,#888888',
+                fit=True,
+                size=64,
+                background_type=2
+            )
         ground_truth = {}
         for img, lbl in generator:
             # Do something with the pillow images here.
@@ -62,10 +78,11 @@ class MyTextGenerator:
 
 if __name__ == '__main__':
     current_directory_o = os.getcwd()
-    words_file_path_o = f'{current_directory_o}/trdg/dicts/gym.txt'
+    words_file_path_o = f'{current_directory_o}/trdg/dicts/keras.txt'
     output_directory_o = f'{current_directory_o}/out'
 
     bb = MyTextGenerator(input_words_file_path=words_file_path_o,
                          out_dir_path=output_directory_o,
                          nb_of_words=3000,
-                         language='keras')
+                         language='keras',
+                         from_dict=True)
