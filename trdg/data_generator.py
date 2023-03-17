@@ -178,7 +178,7 @@ class FakeTextDataGenerator(object):
                 background_height, background_width
             )
         else:
-            # print('Background is an image')
+            print(f'Background is an image from {image_dir}')
             background_img = background_generator.image(
                 background_height, background_width, image_dir
             )
@@ -197,10 +197,10 @@ class FakeTextDataGenerator(object):
             background_img_px_mean = sum(background_img_st.mean) / 3
 
             if abs(resized_img_px_mean - background_img_px_mean) < 15:
-                print("value of mean pixel is too similar. Ignore this image")
+                # print("value of mean pixel is too similar. Ignore this image")
 
-                print("resized_img_st \n {}".format(resized_img_st.mean))
-                print("background_img_st \n {}".format(background_img_st.mean))
+                # print("resized_img_st \n {}".format(resized_img_st.mean))
+                # print("background_img_st \n {}".format(background_img_st.mean))
 
                 return
         except Exception as err:
