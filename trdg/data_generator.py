@@ -158,19 +158,27 @@ class FakeTextDataGenerator(object):
         #############################
         # Generate background image #
         #############################
-        if background_type == 0:
+        rand_nb = rnd.randint(a=0, b=3)
+
+        if rand_nb == 0:
+            # print('Background is 0')
+
             background_img = background_generator.gaussian_noise(
                 background_height, background_width
             )
-        elif background_type == 1:
+        elif rand_nb == 1:
+            # print('Background is 1')
+
             background_img = background_generator.plain_white(
                 background_height, background_width
             )
-        elif background_type == 2:
+        elif rand_nb == 2:
+            # print('Background is 2')
             background_img = background_generator.quasicrystal(
                 background_height, background_width
             )
         else:
+            # print('Background is an image')
             background_img = background_generator.image(
                 background_height, background_width, image_dir
             )
