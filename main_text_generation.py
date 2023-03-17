@@ -9,7 +9,10 @@ from trdg.generators import (
 
 
 class MyTextGenerator:
-    def __init__(self, input_words_file_path: str, out_dir_path: str, nb_of_words: int,
+    def __init__(self, input_words_file_path: str,
+                 out_dir_path: str,
+                 nb_of_words: int,
+                 language: str,
                  from_dict: bool = False):
         output_ground_truth_file = f'{out_dir_path}/gt/gt.json'
 
@@ -25,7 +28,7 @@ class MyTextGenerator:
         # The generators use the same arguments as the CLI, only as parameters
         generator = GeneratorFromStrings(
             strings=words_list,
-            language="latin",  # ['latin, '7led']
+            language=language,  # ['latin, '7led']
             count=nb_of_words,
             blur=2,
             distorsion_type=3,
@@ -64,4 +67,5 @@ if __name__ == '__main__':
 
     bb = MyTextGenerator(input_words_file_path=words_file_path_o,
                          out_dir_path=output_directory_o,
-                         nb_of_words=3000)
+                         nb_of_words=3000,
+                         language='keras')
