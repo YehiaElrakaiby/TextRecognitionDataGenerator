@@ -1,10 +1,10 @@
 import json
 import os
+import shutil
+
 from trdg.generators import (
     GeneratorFromDict,
-    GeneratorFromRandom,
-    GeneratorFromStrings,
-    GeneratorFromWikipedia,
+    GeneratorFromStrings
 )
 
 
@@ -29,6 +29,12 @@ class MyTextGenerator:
         @param from_dict: specifies whether to generate sentences from the dict corresponding to the language
             or generate words using the input_words_file_path
         """
+        # Delete the out directory if it exists
+        if os.path.isdir(out_dir_path):
+            shutil.rmtree(out_dir_path)
+
+        os.mkdir(out_dir_path)
+        os.mkdir(f'{out_dir_path}/gt')
 
         output_ground_truth_file = f'{out_dir_path}/gt/gt.json'
 
@@ -43,8 +49,10 @@ class MyTextGenerator:
 
         # The generators use the same arguments as the CLI, only as parameters
         if from_dict:
+            print('Generating from sentences...')
             generator = GeneratorFromDict(
                 length=3,
+                allow_variable=True,
                 language=language,  # ['keras', '7led']
                 count=nb_of_sentences,
                 blur=2,
@@ -59,6 +67,8 @@ class MyTextGenerator:
                 image_dir=image_dir
             )
         else:
+            print('Generating from words...')
+
             generator = GeneratorFromStrings(
                 strings=words_list,
                 language=language,  # ['keras', '7led']
@@ -110,7 +120,7 @@ if __name__ == '__main__':
 
     bb = MyTextGenerator(input_words_file_path=words_file_path_o,
                          out_dir_path=output_directory_o,
-                         nb_of_sentences=3000,
+                         nb_of_sentences=10000,
                          language='keras',
                          image_dir=image_dir_o,
-                         from_dict=True)
+                         from_dict=False)
