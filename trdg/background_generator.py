@@ -60,6 +60,7 @@ def image(height: int, width: int, image_dir: str) -> Image:
     Create a background with a image
     """
     images = os.listdir(image_dir)
+    images = [img for img in images if img != '.DS_Store']
 
     if len(images) > 0:
         pic = Image.open(
