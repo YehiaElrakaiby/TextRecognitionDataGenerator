@@ -11,7 +11,7 @@ from trdg.generators import (
 current_directory = os.getcwd()
 words_file_path = f'{current_directory}/trdg/dicts/gym.txt'
 output_directory = f'{current_directory}/out'
-output_ground_truth_file = f'{current_directory}/out_ground_truth.txt'
+output_ground_truth_file = f'{current_directory}/out/gt/gt.txt'
 
 counter = 0
 
