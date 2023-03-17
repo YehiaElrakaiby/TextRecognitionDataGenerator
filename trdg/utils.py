@@ -37,6 +37,7 @@ def load_fonts(lang: str) -> List[str]:
             )
         ]
     else:
+        assert False, f'language {lang} not found'
         return [
             os.path.join(os.path.dirname(__file__), "fonts/latin", font)
             for font in os.listdir(
