@@ -105,4 +105,5 @@ ENV/
 
 .vscode/*
 
+# Folders to ignore
 keras
