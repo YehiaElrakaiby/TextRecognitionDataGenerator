@@ -10,11 +10,12 @@ from trdg.generators import (
 
 class MyTextGenerator:
 
-    def __init__(self, input_words_file_path: str,
+    def __init__(self,
+                 input_words_file_path: str,
                  out_dir_path: str,
                  nb_of_sentences: int,
                  language: str,  # ['keras', 'numbers']
-                 image_dir: str,  # path to a folder where background images are kept
+                 image_dir: str,  # path to the folder of background images
                  from_dict: bool = False):
         """
         Generates synthetic images and a grond truth file containing a JSON dictionary mapping the path of the image
