@@ -83,6 +83,7 @@ class GeneratorFromStrings:
         self.fit = fit
         self.output_mask = output_mask
         self.word_split = word_split
+        print(f'image_dir is {image_dir}')
         self.image_dir = image_dir
         self.output_bboxes = output_bboxes
         self.generated_count = 0
