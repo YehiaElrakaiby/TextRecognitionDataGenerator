@@ -61,6 +61,15 @@ class FakeTextDataGenerator(object):
         horizontal_margin = margin_left + margin_right
         vertical_margin = margin_top + margin_bottom
 
+        rand_background = rnd.randint(a=0, b=5)
+        # print(text_color)
+        if rand_background > 2:  # the background is dark
+            print('the background is dark')
+            bright_text_colors = ['#C8DE2D', '#FFFFFF', '#E4F706', '#EC79E3', '#B8F08A', '#8AF0F0']  # [yellow]
+            index_text_color = rnd.randint(a=0, b=5)
+            selected_color = bright_text_colors[index_text_color]
+            text_color = f'{selected_color},{selected_color}'
+
         ##########################
         # Create picture of text #
         ##########################
@@ -69,6 +78,7 @@ class FakeTextDataGenerator(object):
                 raise ValueError("Vertical handwritten text is unavailable")
             image, mask = handwritten_text_generator.generate(text, text_color)
         else:
+            print(text_color)
             image, mask = computer_text_generator.generate(
                 text,
                 font,
@@ -158,27 +168,23 @@ class FakeTextDataGenerator(object):
         #############################
         # Generate background image #
         #############################
-        rand_nb = rnd.randint(a=0, b=3)
-
-        if rand_nb == 0:
+        if rand_background == 0:
             # print('Background is 0')
-
             background_img = background_generator.gaussian_noise(
                 background_height, background_width
             )
-        elif rand_nb == 1:
+        elif rand_background == 1:
             # print('Background is 1')
-
             background_img = background_generator.plain_white(
                 background_height, background_width
             )
-        elif rand_nb == 2:
+        elif rand_background == 2:
             # print('Background is 2')
             background_img = background_generator.quasicrystal(
                 background_height, background_width
             )
         else:
-            print(f'Background is an image from {image_dir}')
+            # print(f'Background is an image from {image_dir}')
             background_img = background_generator.image(
                 background_height, background_width, image_dir
             )
@@ -198,7 +204,6 @@ class FakeTextDataGenerator(object):
 
             if abs(resized_img_px_mean - background_img_px_mean) < 15:
                 # print("value of mean pixel is too similar. Ignore this image")
-
                 # print("resized_img_st \n {}".format(resized_img_st.mean))
                 # print("background_img_st \n {}".format(background_img_st.mean))
 
