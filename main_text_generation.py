@@ -118,9 +118,11 @@ if __name__ == '__main__':
     output_directory_o = f'{current_directory_o}/out'
     image_dir_o = f'{current_directory_o}/trdg/images/dark'
 
-    bb = MyTextGenerator(input_words_file_path=words_file_path_o,
-                         out_dir_path=output_directory_o,
-                         nb_of_sentences=10000,
-                         language='keras',
-                         image_dir=image_dir_o,
-                         from_dict=False)
+    # bb = MyTextGenerator(input_words_file_path=words_file_path_o,
+    #                      out_dir_path=output_directory_o,
+    #                      nb_of_sentences=10000,
+    #                      language='keras',
+    #                      image_dir=image_dir_o,
+    #                      from_dict=False)
+    print(output_directory_o)
+
