@@ -15,10 +15,10 @@ class MyTextGenerator:
                  out_dir_path: str,
                  nb_of_sentences: int,
                  language: str,  # ['keras', 'numbers']
-                 image_dir: str,  # path to the folder of background images
+                 image_dir: str,  # path to the folder of dark background images
                  from_dict: bool = False):
         """
-        Generates synthetic images and a grond truth file containing a JSON dictionary mapping the path of the image
+        Generates synthetic images and a ground truth file containing a JSON dictionary mapping the path of the image
         to its label (the sentence)
 
         @param input_words_file_path: the words using which to compose sentences
