@@ -67,7 +67,7 @@ class GeneratorFromDict:
                 self.length, self.allow_variable, self.batch_size, self.dict
             ),
             count,
-            fonts if len(fonts) else load_fonts(language),
+            load_fonts(fonts) if len(fonts) else load_fonts(language),
             language,
             size,
             skewing_angle,
