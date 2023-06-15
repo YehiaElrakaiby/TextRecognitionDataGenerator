@@ -180,7 +180,7 @@ if __name__ == '__main__':
 
     bb = MyTextGenerator(dict_file_name=dict_file_i,
                          out_folder_name=output_folder_name_i,
-                         nb_of_sentences=100000,
+                         nb_of_sentences=10000,
                          fonts_folder_name=fonts_folder_i,
                          background_folder_name=background_folder_i,
                          sentence_length=sentence_length_i)
