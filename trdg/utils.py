@@ -28,8 +28,8 @@ def load_dict(path: str) -> List[str]:
 
 def load_fonts(lang: str) -> List[str]:
     """Load all fonts in the fonts directories"""
-
-    if lang in os.listdir(os.path.join(os.path.dirname(__file__), "fonts")):
+    dir_contents = os.listdir(os.path.join(os.path.dirname(__file__), "fonts"))
+    if lang in dir_contents:
         return [
             os.path.join(os.path.dirname(__file__), "fonts/{}".format(lang), font)
             for font in os.listdir(
@@ -37,7 +37,7 @@ def load_fonts(lang: str) -> List[str]:
             )
         ]
     else:
-        assert False, f'language {lang} not found'
+        assert False, f'language {lang} not found in {dir_contents}'
         return [
             os.path.join(os.path.dirname(__file__), "fonts/latin", font)
             for font in os.listdir(

@@ -11,36 +11,41 @@ from trdg.generators import (
 class MyTextGenerator:
 
     def __init__(self,
-                 input_words_file_path: str,
-                 out_dir_path: str,
+                 dict_file_name: str,
+                 out_folder_name: str,
                  nb_of_sentences: int,
-                 language: str,  # ['keras', 'numbers']
-                 image_dir: str,  # path to the folder of dark background images
-                 from_dict: bool = False):
+                 sentence_length: int,
+                 fonts_folder_name: str,  # ['gym_text', 'gym_times', 'gym_numbers']
+                 background_folder_name: str
+                 ):
         """
         Generates synthetic images and a ground truth file containing a JSON dictionary mapping the path of the image
         to its label (the sentence)
 
-        @param input_words_file_path: the words using which to compose sentences
-        @param out_dir_path: where to save the images and the ground truth file
+        @param dict_file_name: the words to use (from_dict=False) or using which to compose sentences (from_dict=True)
+        @param out_folder_name: where to save the images and the ground truth file
         @param nb_of_sentences: the number of sentences to generate
-        @param language: the language (dictionary) to use for generation of sentences
-        @param image_dir: the directory where background images are stored
-        @param from_dict: specifies whether to generate sentences from the dict corresponding to the language
-            or generate words using the input_words_file_path
+        @param fonts_folder_name: the language (dictionary words) to use for generation of sentences
+        @param background_folder_name: the directory where background images are stored
         """
+        current_directory = os.getcwd()
+        dict_file_path = f'{current_directory}/trdg/dicts/{dict_file_name}'
+        output_folder_path = f'{current_directory}/out/{out_folder_name}'
+        background_folder_path = f'{current_directory}/trdg/images/{background_folder_name}'
+        fonts_folder_path = f'{current_directory}/trdg/fonts/{fonts_folder_name}'
+
         # Delete the out directory if it exists
-        if os.path.isdir(out_dir_path):
-            shutil.rmtree(out_dir_path)
+        if os.path.isdir(output_folder_path):
+            shutil.rmtree(output_folder_path)
 
-        os.mkdir(out_dir_path)
-        os.mkdir(f'{out_dir_path}/gt')
+        os.mkdir(output_folder_path)
+        os.mkdir(f'{output_folder_path}/gt')
 
-        output_ground_truth_file = f'{out_dir_path}/gt/gt.json'
+        output_ground_truth_file = f'{output_folder_path}/gt/gt.json'
 
         counter = 0
 
-        with open(file=input_words_file_path, mode='r', encoding='utf-8') as f:
+        with open(file=f"{dict_file_path}.txt", mode='r', encoding='utf-8') as f:
             words_list = []
             lines = f.readlines()
             for line in lines:
@@ -48,42 +53,25 @@ class MyTextGenerator:
                 words_list.append(word)
 
         # The generators use the same arguments as the CLI, only as parameters
-        if from_dict:
-            print('Generating from sentences...')
-            generator = GeneratorFromDict(
-                length=3,
-                allow_variable=True,
-                language=language,  # ['keras', '7led']
-                count=nb_of_sentences,
-                blur=2,
-                distorsion_type=3,
-                random_blur=True,
-                random_skew=True,
-                skewing_angle=15,
-                text_color='#000000,#888888',
-                fit=True,
-                size=64,
-                # background_type=2
-                image_dir=image_dir
-            )
-        else:
-            print('Generating from words...')
+        print('Generating from sentences...')
+        generator = GeneratorFromDict(
+            length=sentence_length,
+            allow_variable=True,
+            language=dict_file_name,  # ['keras', '7led']
+            fonts=[fonts_folder_name],
+            count=nb_of_sentences,
+            blur=2,
+            distorsion_type=3,
+            random_blur=True,
+            random_skew=True,
+            skewing_angle=15,
+            text_color='#000000,#888888',
+            fit=True,
+            size=64,
+            # background_type=2
+            image_dir=background_folder_name
+        )
 
-            generator = GeneratorFromStrings(
-                strings=words_list,
-                language=language,  # ['keras', '7led']
-                count=nb_of_sentences,
-                blur=2,
-                distorsion_type=3,
-                random_blur=True,
-                random_skew=True,
-                skewing_angle=15,
-                text_color='#000000,#888888',
-                fit=True,
-                size=64,
-                # background_type=2
-                image_dir=image_dir
-            )
         ground_truth = {}
         for img, lbl in generator:
             # Do something with the pillow images here.
@@ -93,7 +81,7 @@ class MyTextGenerator:
 
             identifier = identifier.zfill(5)
 
-            image_file_path = os.path.join(out_dir_path, f"{identifier}_{image_name}.jpg")
+            image_file_path = os.path.join(out_folder_name, f"{identifier}_{image_name}.jpg")
 
             try:
                 img.save(image_file_path)
@@ -113,16 +101,17 @@ class MyTextGenerator:
 
 
 if __name__ == '__main__':
-    current_directory_o = os.getcwd()
-    words_file_path_o = f'{current_directory_o}/trdg/dicts/keras.txt'
-    output_directory_o = f'{current_directory_o}/out'
-    image_dir_o = f'{current_directory_o}/trdg/images/dark'
 
-    bb = MyTextGenerator(input_words_file_path=words_file_path_o,
-                         out_dir_path=output_directory_o,
-                         nb_of_sentences=10000,
-                         language='keras',
-                         image_dir=image_dir_o,
-                         from_dict=False)
-    print(output_directory_o)
+    dict_file = 'gym_text'  # ['gym_text', 'gym_numbers', 'gym_times'] in trdg/dicts
+    fonts_folder = 'fit_race'  # ['led', 'fit_race'] folder in trdg/fonts
+    background_folder = 'dark'  # ['dark'] folder in trdg/images
+    output_folder_name = f'{dict_file}_{fonts_folder}'
+    sentence_length = 1
+
+    bb = MyTextGenerator(dict_file_name=dict_file,
+                         out_folder_name=output_folder_name,
+                         nb_of_sentences=100,
+                         fonts_folder_name=fonts_folder,
+                         background_folder_name=background_folder,
+                         sentence_length=sentence_length)
 
