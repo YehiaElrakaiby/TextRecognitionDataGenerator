@@ -55,16 +55,12 @@ class FakeTextDataGenerator(object):
         image_mode: str = "RGB",
         output_bboxes: int = 0,
     ) -> Image:
-        image = None
-
         margin_top, margin_left, margin_bottom, margin_right = margins
         horizontal_margin = margin_left + margin_right
         vertical_margin = margin_top + margin_bottom
 
         rand_background = rnd.randint(a=0, b=5)
-        # print(text_color)
         if rand_background > 2:  # the background is dark
-            print('the background is dark')
             bright_text_colors = ['#C8DE2D', '#FFFFFF', '#E4F706', '#EC79E3', '#B8F08A', '#8AF0F0']  # [yellow]
             index_text_color = rnd.randint(a=0, b=5)
             selected_color = bright_text_colors[index_text_color]
@@ -78,7 +74,6 @@ class FakeTextDataGenerator(object):
                 raise ValueError("Vertical handwritten text is unavailable")
             image, mask = handwritten_text_generator.generate(text, text_color)
         else:
-            print(text_color)
             image, mask = computer_text_generator.generate(
                 text,
                 font,
